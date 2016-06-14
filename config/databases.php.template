@@ -1,0 +1,17 @@
+<?php
+/**
+ * This file includes the list of the databases
+ * the script should check
+ * 
+ */
+
+$databases = array(
+    /*
+     * 'db1' => array(
+     *      'host' => 'localhost',
+     *      'username' => 'db_username',
+     *      'password' => 'db_password',
+     *      'database' => 'db_name'
+     * )
+     */
+);

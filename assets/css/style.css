@@ -1,0 +1,14 @@
+.overlay{
+    z-index: 30;
+    position: fixed;
+    background-color: rgba(0,0,0,0.7);
+    top: 0px; bottom: 0px; left: 0px; right: 0px;
+    display: none;
+}
+
+.overlay-body{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0) url(/assets/img/spinner.svg) no-repeat fixed center;
+}
