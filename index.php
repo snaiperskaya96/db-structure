@@ -26,6 +26,7 @@ $databases = $structure->getDatabases();
                     <span class="col col-md-6 text-right">
                         <a class="btn btn-primary get-structure" data-id="<?=$name;?>">Get structure</a>
                     </span>
+                    <div style="clear:both;"></div>
                 </div>
                 <div style="clear:both"></div>
             </div>
@@ -40,7 +41,6 @@ $databases = $structure->getDatabases();
     </div>
     <div class="overlay">
         <div class="overlay-body">
-
         </div>
     </div>
     </body>

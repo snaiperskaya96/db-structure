@@ -9,5 +9,5 @@ if(!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUEST
 $data = !empty($_REQUEST['database']) ? $_REQUEST['database'] : '';
 
 if($data != ''){
-    echo $structure->test($data);
+    echo $structure->parseTable($data);
 }

@@ -45,7 +45,7 @@ class Structure{
         return $this->configs;
     }
 
-    public function test($dbname){
+    public function parseTable($dbname){
         $return = array();
         $data = $this->configs[$dbname];
         $db = new MysqliDb($data['host'],$data['username'],$data['password'],$data['database']);
@@ -57,9 +57,18 @@ class Structure{
             $table = $db->getOne('information_schema.tables', null);
             if(!empty($table)){
                 $return[$tableName] = $table;
-                $db->where('TABLE_NAME', $tableName);
-                $db->where('TABLE_SCHEMA', $data['database']);
-                $columns = $db->get('information_schema.columns',null);
+                $db->join('information_schema.key_column_usage s','c.TABLE_NAME=s.TABLE_NAME AND c.COLUMN_NAME=s.COLUMN_NAME', 'LEFT');
+                $db->where('c.TABLE_NAME', $tableName);
+                $db->where('c.TABLE_SCHEMA', $data['database']);
+                $db->groupBy('c.COLUMN_NAME'); // There may be multiple columns
+                $db->orderBy('c.ORDINAL_POSITION','ASC'); // Ordering by original position
+                $columnNames = 'c.CHARACTER_MAXIMUM_LENGTH,'
+                .'c.CHARACTER_OCTET_LENGTH,c.CHARACTER_SET_NAME,c.COLLATION_NAME,c.COLUMN_COMMENT,c.COLUMN_DEFAULT,'
+                .'c.COLUMN_KEY,c.COLUMN_NAME,c.COLUMN_TYPE,c.DATA_TYPE,c.DATETIME_PRECISION,c.EXTRA,c.IS_NULLABLE,'
+                .'c.NUMERIC_PRECISION,c.NUMERIC_SCALE,c.ORDINAL_POSITION,c.PRIVILEGES,c.TABLE_CATALOG,c.TABLE_NAME,'
+                .'c.TABLE_SCHEMA,s.CONSTRAINT_NAME as FK_CONSTRAINT_NAME,s.REFERENCED_TABLE_NAME as FK_REFERENCED_TABLE_NAME,'
+                .'s.REFERENCED_COLUMN_NAME as FK_REFERENCED_COLUMN_NAME';
+                $columns = $db->get('information_schema.columns c',null,$columnNames);
                 $return[$tableName]['columns'] = $columns;
             }
         }

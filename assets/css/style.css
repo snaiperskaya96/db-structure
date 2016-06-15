@@ -12,3 +12,11 @@
     height: 100%;
     background: rgba(0,0,0,0) url(/assets/img/spinner.svg) no-repeat fixed center;
 }
+
+.table-header{
+    background-color: #D9D9D9;
+}
+
+.table-name{
+    background-color: #B3B3B3;
+}
