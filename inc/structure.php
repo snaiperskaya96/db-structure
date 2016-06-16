@@ -15,6 +15,7 @@ class Structure{
     }
 
     private function init($prefix){
+        mysqli_report(MYSQLI_REPORT_STRICT);
         if(file_exists($prefix.'config/databases.php'))
             require_once($prefix.'config/databases.php');
         else
@@ -25,14 +26,12 @@ class Structure{
     }
 
     public function getDatabases(){
-        $dbs = array('available','unavailable');
+        $dbs = array('available' => array(),'unavailable' => array());
         foreach($this->configs as $name => $config){
             try {
-                $db = @new MysqliDb($config['host'],$config['username'],$config['password'],$config['database']);
-                if (@$db->ping())
-                    $dbs['available'][$name] = $config;
-                else
-                    $dbs['unavailable'][$name] = @$db->getLastError();
+                $db = new MysqliDb($config['host'],$config['username'],$config['password'],$config['database']);
+                $db->ping();
+                $dbs['available'][$name] = $config;
             } catch (Exception $e){
                 $dbs['unavailable'][$name] = $e->getMessage();
             }
@@ -44,7 +43,7 @@ class Structure{
         return $this->configs;
     }
 
-    public static function get($fileName){
+    public function get($fileName){
         $file = '/tmp/' . preg_replace('[\\\/\*\[\]\(\)\@\~]','',$fileName);
         if (file_exists($file)) {
             header('Content-Description: File Transfer');
@@ -57,7 +56,6 @@ class Structure{
             readfile($file);
             exit;
         }
-
     }
     private function write($phpWord, $filename, $writers)
     {
