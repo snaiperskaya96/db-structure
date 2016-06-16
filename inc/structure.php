@@ -166,7 +166,6 @@ class Structure{
                 $db->join('information_schema.key_column_usage s','c.TABLE_NAME=s.TABLE_NAME AND c.COLUMN_NAME=s.COLUMN_NAME', 'LEFT');
                 $db->where('c.TABLE_NAME', $tableName);
                 $db->where('c.TABLE_SCHEMA', $data['database']);
-                $db->groupBy('c.COLUMN_NAME'); // There may be multiple columns
                 $db->orderBy('c.ORDINAL_POSITION','ASC'); // Ordering by original position
                 $columnNames = 'c.CHARACTER_MAXIMUM_LENGTH,'
                 .'c.CHARACTER_OCTET_LENGTH,c.CHARACTER_SET_NAME,c.COLLATION_NAME,c.COLUMN_COMMENT,c.COLUMN_DEFAULT,'
