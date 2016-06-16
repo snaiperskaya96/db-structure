@@ -7,11 +7,17 @@
 
 $databases = array(
     /*
-     * 'db1' => array(
+     * 'Bookmark name1' => array(
      *      'host' => 'localhost',
      *      'username' => 'db_username',
      *      'password' => 'db_password',
      *      'database' => 'db_name'
-     * )
+     * ),
+     * 'Bookmark name2' => array(
+     *      'host' => 'localhost2',
+     *      'username' => 'db_username2',
+     *      'password' => 'db_password2',
+     *      'database' => 'db_name2',
+     * ),
      */
 );
