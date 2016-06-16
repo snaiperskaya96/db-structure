@@ -20,3 +20,15 @@
 .table-name{
     background-color: #B3B3B3;
 }
+* {
+    box-sizing: border-box;
+}
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+td {
+    overflow: hidden;
+    border: solid 1px #000;
+}

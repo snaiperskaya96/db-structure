@@ -1,2 +1,4 @@
 .idea
 config/databases.php
+inc/vendor
+inc/composer.lock

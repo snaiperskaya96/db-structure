@@ -1,0 +1,11 @@
+{
+  "require": {
+    "phpoffice/phpword": "v0.12.*"
+  },
+  "autoload": {
+    "classmap": [
+      "SqlFormatter/SqlFormatter.php",
+      "MysqliDb/mysqlidb.php"
+    ]
+  }
+}

@@ -8,6 +8,8 @@
 require_once('inc/structure.php');
 $structure = new Structure();
 $databases = $structure->getDatabases();
+if(!empty($_GET['get']))
+    $structure->get($_GET['get']);
 ?>
 <html>
     <head>
@@ -34,8 +36,10 @@ $databases = $structure->getDatabases();
                                 <li><a onclick="exportDoc('<?=$db['database'];?>')" href="#">Doc</a></li>
                             </ul>
                         </div>
-
                     </div>
+                    <h6 class="col col-md-12 text-right">
+                        Data Lengths marked with an asterisk (*) indicate default minimum length in bytes required by MySql
+                    </h6>
                     <div style="clear:both;"></div>
                 </div>
                 <div style="clear:both"></div>

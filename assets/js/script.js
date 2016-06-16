@@ -1,3 +1,23 @@
+var DEFAULT_DATA_LENGTH = {
+    'tinytext' : '1',
+    'text' : '2',
+    'mediumtext' : '3',
+    'longtext' : '4',
+    'tinyblob' : '1',
+    'blob' : '2',
+    'mediumblob' : '3',
+    'longblob' : '4',
+    'float' : '4/8',
+    'double' : '8',
+    'enum' : '1/2',
+    'year' : '1',
+    'date' : '3',
+    'time' : '3',
+    'datetime' : '8',
+    'timestamp' : '4'
+};
+
+
 
 $(document).ready(function() {
     $('.get-structure').click(function () {
@@ -50,17 +70,29 @@ function generateTable(data, database){
                 uniqueKeys += colVal.COLUMN_NAME;
             }
             var colLengthRegex = colVal.COLUMN_TYPE.match(/[0-9]{1,3}/);
-            var colLength = colLengthRegex !== null && colLengthRegex.length > 0 ? colLengthRegex[0] : 'N/A';
+            var colLength = colLengthRegex !== null && colLengthRegex.length > 0 ? colLengthRegex[0] : '';
             var colTypeRegex = colVal.COLUMN_TYPE.match(/([a-z]+)([0-9]{1,3})?/);
             var colType = colTypeRegex !== null && colTypeRegex.length > 0 ? colTypeRegex[1] : 'N/A';
+
+            colLength = DEFAULT_DATA_LENGTH[colType.toLowerCase()] !== undefined ?
+                DEFAULT_DATA_LENGTH[colType.toLowerCase()] + "*" : colLength;
+
             row = $('<tr></tr>').addClass('field');
             $('<td></td>').text(colVal.COLUMN_NAME).appendTo(row);
             $('<td></td>').text(colVal.COLUMN_COMMENT).appendTo(row);
             $('<td></td>').text(colType).appendTo(row);
-            $('<td></td>').text(colLength).appendTo(row);
+            $('<td></td>').text(colLength).attr('style','text-align: right').appendTo(row);
             $('<td></td>').text(firstToUpperCase(colVal.IS_NULLABLE)).appendTo(row);
-            $('<td></td>').text(colVal.COLUMN_DEFAULT == null ? 'Null' : colVal.COLUMN_DEFAULT).appendTo(row);
-            $('<td></td>').text('TBI').appendTo(row);
+            $('<td></td>').text(colVal.COLUMN_DEFAULT == null ? 'Null' : colVal.COLUMN_DEFAULT).attr('style','text-align: right;').appendTo(row);
+
+            var example = '';
+            if(val.examples !== null && val.examples[colVal.COLUMN_NAME] != null){
+                if(val.examples[colVal.COLUMN_NAME].length <= 30) example = val.examples[colVal.COLUMN_NAME];
+                if(val.examples[colVal.COLUMN_NAME].length > 30)
+                    example = val.examples[colVal.COLUMN_NAME].substr(0,30) + "...";
+            }
+
+            $('<td></td>').text(example).appendTo(row);
             $(row).appendTo(tbody);
 
             var FkConst = colVal.FK_CONSTRAINT_NAME;
@@ -90,6 +122,10 @@ function generateTable(data, database){
         var sqlRow = $('<tr></tr>').addClass('sql').appendTo(tbody);
         $('<td></td>').text('SQL Code').attr('colspan','1').addClass('table-name').appendTo(sqlRow);
         $('<td></td>').text(val.sql).attr('colspan','6').appendTo(sqlRow);
+
+        var notesRow = $('<tr></tr>').addClass('notes').appendTo(tbody);
+        $('<td></td>').text('Notes').attr('colspan','1').addClass('table-name').appendTo(notesRow);
+        $('<td></td>').text('').attr('colspan','6').appendTo(notesRow);
 
         $('#' + database).append(container);
         $('#' + database).append($('<hr/>'));
@@ -148,18 +184,24 @@ function exportDoc(database){
                     break;
                 case "sql":
                     data.tables[tableName]['sql'] = trVal.children[1].innerText;
+                    break;
+                case "notes":
+                    data.tables[tableName]['notes'] = trVal.children[1].innerText;
+                    break;
             }
         });
     });
 
-    console.log(data);
     $('.overlay').fadeIn();
     $.ajax({
         method: 'post',
         url: 'inc/ajax.php',
         data: {json: JSON.stringify(data)}
     }).done(function(response){
-        console.log(response);
+        var json = JSON.parse(response);
+        if(json.status == 'ok'){
+            window.location = '?get=' + json.source
+        }
     }).always(function(){
         $('.overlay').fadeOut();
     });

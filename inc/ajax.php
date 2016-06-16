@@ -13,5 +13,5 @@ if($data != ''){
 
 $data = !empty($_REQUEST['json']) ? $_REQUEST['json'] : '';
 if($data != ''){
-    echo $structure->toDoc($data);
+    $structure->toDoc($data);
 }
