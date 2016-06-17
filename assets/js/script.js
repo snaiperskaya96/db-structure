@@ -87,9 +87,12 @@ function generateTable(data, database){
 
             var example = '';
             if(val.examples !== null && val.examples[colVal.COLUMN_NAME] != null){
-                if(val.examples[colVal.COLUMN_NAME].length <= 30) example = val.examples[colVal.COLUMN_NAME];
-                if(val.examples[colVal.COLUMN_NAME].length > 30)
-                    example = val.examples[colVal.COLUMN_NAME].substr(0,30) + "...";
+                var value = val.examples[colVal.COLUMN_NAME].toString();
+                if(value.length <= 30) {
+                    example = value;
+                }else{
+                    example = value.substr(0,30) + "...";
+                }
             }
 
             $('<td></td>').text(example).appendTo(row);

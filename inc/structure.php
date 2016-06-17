@@ -175,7 +175,15 @@ class Structure{
                 .'s.REFERENCED_COLUMN_NAME as FK_REFERENCED_COLUMN_NAME';
                 $columns = $db->get('information_schema.columns c',null,$columnNames);
                 $return[$tableName]['columns'] = $columns;
-                $return[$tableName]['examples'] = $db->getOne($tableName);
+                $columnArray = array();
+                foreach ($columns as $column) {
+                    if(isset($column['COLUMN_NAME'])){
+                        $columnArray[] = 'MAX(`'.$column['COLUMN_NAME'].'`) as "'.$column['COLUMN_NAME'].'"';
+                    }
+                }
+                $columnString = implode(',',$columnArray);
+                $allValues = $db->getOne($tableName,$columnString);
+                $return[$tableName]['examples'] = $allValues;
             }
         }
         return json_encode($return);

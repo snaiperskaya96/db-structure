@@ -15,6 +15,7 @@ if(!empty($_GET['get']))
     <head>
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+        <link rel="shortcut icon" href="assets/img/favicon.ico" />
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/script.js"></script>
