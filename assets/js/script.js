@@ -22,6 +22,10 @@ var DEFAULT_DATA_LENGTH = {
 $(document).ready(function() {
     $('.get-structure').click(function () {
         var database = $(this).attr('data-id');
+        var databaseName = $(this).attr('data-name');
+        debugger;
+        $('.well-'+databaseName).remove();
+        $('.hr-'+databaseName).remove();
         var id = $(this).parent().parent().attr('id');
         $('.overlay').fadeIn();
         $.ajax({
@@ -41,7 +45,7 @@ function generateTable(data, database){
     var container = null;
     var row = null;
     $.each(data, function(id, val){
-        container = $('<div></div>').addClass('well').attr('id',database+'-container-'+val.TABLE_NAME);
+        container = $('<div></div>').addClass('well well-'+database).attr('id',database+'-container-'+val.TABLE_NAME);
         table = $('<table></table>').addClass('table ' + database +'-table').attr('id',database+'-table-'+val.TABLE_NAME).appendTo(container);
         tbody = $('<tbody></tbody>').appendTo(table);
 
@@ -131,7 +135,7 @@ function generateTable(data, database){
         $('<td></td>').text('').attr('colspan','6').appendTo(notesRow);
 
         $('#' + database).append(container);
-        $('#' + database).append($('<hr/>'));
+        $('#' + database).append($('<hr/>').addClass('hr-'+database));
     });
 
 }
@@ -144,7 +148,7 @@ function firstToUpperCase( str ) {
 function exportDoc(database){
     var tables = $('.' + database + '-table');
     if(tables.length < 1){
-        alert("No data available");
+        alert("No data available. \nYou must run Get Structure for this database first.");
         return false;
     }
     var data = {

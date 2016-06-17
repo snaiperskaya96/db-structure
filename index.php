@@ -19,6 +19,7 @@ if(!empty($_GET['get']))
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/bootstrap.min.js"></script>
         <script src="assets/js/script.js"></script>
+        <title>Database Structure Viewer</title>
     </head>
     <body>
     <div class="container">
@@ -28,7 +29,7 @@ if(!empty($_GET['get']))
                 <div class="database-container" id="<?=$db['database'];?>">
                     <h4 class="database-name col col-md-6"><?=$name;?></h4>
                     <div class="col col-md-6 text-right" role="group" aria-label="">
-                        <div class="btn btn-primary get-structure" data-id="<?=$name;?>">Get structure</div>
+                        <div class="btn btn-primary get-structure" data-name="<?=$db['database'];?>" data-id="<?=$name;?>">Get structure</div>
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle form-control" data-toggle="dropdown">
                                 <span data-bind="label">Export To</span>&nbsp;<span class="caret"></span>
