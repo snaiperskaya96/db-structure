@@ -23,7 +23,6 @@ $(document).ready(function() {
     $('.get-structure').click(function () {
         var database = $(this).attr('data-id');
         var databaseName = $(this).attr('data-name');
-        debugger;
         $('.well-'+databaseName).remove();
         $('.hr-'+databaseName).remove();
         var id = $(this).parent().parent().attr('id');
