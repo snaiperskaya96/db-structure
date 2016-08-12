@@ -153,7 +153,7 @@ class Structure{
         $return = array();
         $data = $this->configs[$dbname];
         $db = @new MysqliDb($data['host'],$data['username'],$data['password'],$data['database']);
-        $result = $db->rawQuery('SHOW TABLES FROM ' .$data['database']);
+        $result = $db->rawQuery('SHOW TABLES FROM `' .$data['database'] .'`');
         foreach($result as $row => $value){
             $tableName = array_values($value)[0];
             $db->where('TABLE_SCHEMA',$data['database']);
