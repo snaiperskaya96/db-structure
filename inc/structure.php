@@ -162,7 +162,7 @@ class Structure{
             if(!empty($table)){
                 $return[$tableName] = $table;
                 $createQuery = $db->rawQuery('SHOW CREATE TABLE '.$tableName);
-                $return[$tableName]['sql'] = array_values(array_values($createQuery)[0])[1];
+                $return[$tableName]['sql'] = SqlFormatter::format(array_values(array_values($createQuery)[0])[1]);
                 $db->join('information_schema.key_column_usage s','c.TABLE_SCHEMA=s.TABLE_SCHEMA AND c.TABLE_NAME=s.TABLE_NAME AND c.COLUMN_NAME=s.COLUMN_NAME', 'LEFT');
                 $db->where('c.TABLE_NAME', $tableName);
                 $db->where('c.TABLE_SCHEMA', $data['database']);

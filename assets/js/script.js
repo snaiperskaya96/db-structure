@@ -127,7 +127,7 @@ function generateTable(data, database){
 
         var sqlRow = $('<tr></tr>').addClass('sql').appendTo(tbody);
         $('<td></td>').text('SQL Code').attr('colspan','1').addClass('table-name').appendTo(sqlRow);
-        $('<td></td>').text(val.sql).attr('colspan','6').appendTo(sqlRow);
+        $('<td></td>').html(val.sql).attr('colspan','6').appendTo(sqlRow);
 
         var notesRow = $('<tr></tr>').addClass('notes').appendTo(tbody);
         $('<td></td>').text('Notes').attr('colspan','1').addClass('table-name').appendTo(notesRow);
