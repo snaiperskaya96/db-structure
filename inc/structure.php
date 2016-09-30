@@ -126,7 +126,7 @@ class Structure{
             }
 
             $t->addRow(300);
-            $t->addCell(1750, array('gridSpan' => '1','valign' => 'center', 'bgColor' => 'D9D9D9','bold' => true))->addText("Primary Key");
+            $t->addCell(1750, array('gridSpan' => '1','valign' => 'center', 'bgColor' => 'D9D9D9','bold' => true))->addText("Primary Keys");
             $t->addCell(1750, array('gridSpan' => '6','valign' => 'center', 'alignment' => 'center'))->addText($table->keys->primary);
             $t->addRow(300);
             $t->addCell(1750, array('gridSpan' => '1','valign' => 'center', 'bgColor' => 'D9D9D9','bold' => true))->addText("Unique Keys");

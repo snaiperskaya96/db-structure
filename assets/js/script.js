@@ -67,8 +67,11 @@ function generateTable(data, database){
         var foreignKeys = "";
         var uniqueKeys = "";
         $.each(val.columns, function(colId, colVal){
-            if(colVal.COLUMN_KEY.indexOf('PRI') > -1) primaryKey = colVal.COLUMN_NAME;
-            if(colVal.COLUMN_KEY.indexOf('UNI') > -1){
+            if(colVal.COLUMN_KEY.indexOf('PRI') > -1) {
+                if(primaryKey != "") primaryKey += ", ";
+                primaryKey += colVal.COLUMN_NAME;
+            }
+            if(colVal.COLUMN_KEY.indexOf('UNI') > -1) {
                 if(uniqueKeys != "") uniqueKeys += ", ";
                 uniqueKeys += colVal.COLUMN_NAME;
             }
@@ -114,7 +117,7 @@ function generateTable(data, database){
         });
 
         var primaryRow = $('<tr></tr>').addClass('key').appendTo(tbody);
-        $('<td></td>').text('Primary Key').attr('colspan','1').addClass('table-name primary').appendTo(primaryRow);
+        $('<td></td>').text('Primary Keys').attr('colspan','1').addClass('table-name primary').appendTo(primaryRow);
         $('<td></td>').text(primaryKey).attr('colspan','6').appendTo(primaryRow);
 
         var uniqueRow = $('<tr></tr>').addClass('key').appendTo(tbody);
